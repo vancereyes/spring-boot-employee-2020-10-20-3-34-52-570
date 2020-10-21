@@ -39,4 +39,8 @@ public class EmployeeService {
     public Employee update(int id, Employee updatedEmployee) {
         return repository.update(id, updatedEmployee);
     }
+
+    public void delete(int id) {
+
+    }
 }
