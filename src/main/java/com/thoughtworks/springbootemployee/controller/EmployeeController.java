@@ -67,4 +67,11 @@ public class EmployeeController {
                     employees.add(updatedEmployee);
                 });
     }
+
+    @GetMapping(params = "gender")
+    public List<Employee> searchByGender(@RequestParam String gender) {
+        return employees.stream()
+                .filter(employee -> employee.getGender().equalsIgnoreCase(gender))
+                .collect(Collectors.toList());
+    }
 }
