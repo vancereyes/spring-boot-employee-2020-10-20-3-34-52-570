@@ -26,6 +26,6 @@ public class EmployeeService {
     }
 
     public Employee get(int id) {
-        return null;
+        return repository.find(id);
     }
 }
