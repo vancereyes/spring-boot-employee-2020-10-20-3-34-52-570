@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 public class EmployeeController {
 
-    private List<Employee> employees = new ArrayList<>();
+    private final List<Employee> employees = new ArrayList<>();
 
     @GetMapping
     public List<Employee> getAll() {
