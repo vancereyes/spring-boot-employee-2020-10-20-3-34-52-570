@@ -24,7 +24,6 @@ class EmployeeServiceTest {
     public void should_return_all_employees_when_get_all() {
         //given
         EmployeeRepository repository = mock(EmployeeRepository.class);
-
         when(repository.findAll()).thenReturn(asList(new Employee(), new Employee()));
         EmployeeService service = new EmployeeService(repository);
         //when
