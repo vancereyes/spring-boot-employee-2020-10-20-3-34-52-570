@@ -25,6 +25,7 @@ class EmployeeServiceTest {
         //when
         List<Employee> actual = service.getAll();
         //then
+        Mockito.verify(repository, Mockito.times(1)).findAll();
         Assertions.assertEquals(2, actual.size());
     }
 
@@ -39,6 +40,7 @@ class EmployeeServiceTest {
         //when
         Employee actual = service.create(employee);
         //then
+        Mockito.verify(repository, Mockito.times(1)).save(employee);
         Assertions.assertEquals(employee, actual);
 
     }
@@ -54,6 +56,7 @@ class EmployeeServiceTest {
         //when
         Employee actual = service.get(employee.getId());
         //then
+        Mockito.verify(repository, Mockito.times(1)).find(employee.getId());
         Assertions.assertSame(employee, actual);
     }
 
@@ -70,6 +73,7 @@ class EmployeeServiceTest {
         //when
         List<Employee> actual = service.getAllByGender(MALE);
         //then
+        Mockito.verify(repository, Mockito.times(1)).findAll();
         Assert.assertEquals(2, actual.size());
 
     }
