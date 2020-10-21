@@ -5,11 +5,13 @@ import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -82,5 +84,30 @@ class CompanyServiceTest {
         verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).find(id);
         verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).update(id, updatedCompany);
         assertSame(updatedCompany, actual);
+    }
+
+    @Test
+    public void should_delete_all_company_employees_when_clear_employees_given_company_id() {
+        //given
+        String companyName = "OOCL";
+        int id = 1;
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee(1, "Vance", 25, "Male", 60000));
+        employees.add(new Employee(2, "John", 23, "Male", 30000));
+        Company company = new Company(id, companyName, employees);
+        CompanyRepository repository = mock(CompanyRepository.class);
+        when(repository.find(id)).thenReturn(company);
+        CompanyService service = new CompanyService(repository);
+
+        company.getEmployees().clear();
+        Company updatedCompany = company;
+        //when
+        Company actual = service.clearEmployees(id);
+        //then
+        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).find(id);
+        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).update(id, updatedCompany);
+        assertTrue(actual.getEmployees().isEmpty());
+        assertEquals(companyName, actual.getCompanyName());
+        assertEquals(id, actual.getId());
     }
 }

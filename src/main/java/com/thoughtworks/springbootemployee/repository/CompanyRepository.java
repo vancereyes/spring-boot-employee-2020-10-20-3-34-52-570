@@ -22,4 +22,8 @@ public class CompanyRepository {
     public Company update(int id, Company updatedCompany) {
         return null;
     }
+
+    public void delete(Company company) {
+
+    }
 }

@@ -37,4 +37,8 @@ public class CompanyService {
 
         return updatedCompany;
     }
+
+    public Company delete(int id) {
+        return null;
+    }
 }
