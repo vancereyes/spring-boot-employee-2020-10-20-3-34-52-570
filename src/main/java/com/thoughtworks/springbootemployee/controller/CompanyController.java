@@ -3,6 +3,8 @@ package com.thoughtworks.springbootemployee.controller;
 import com.thoughtworks.springbootemployee.model.Company;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,5 +29,12 @@ public class CompanyController {
                 .filter(company -> company.getId() == id)
                 .findFirst()
                 .orElse(null);
+    }
+
+    @PostMapping
+    public Company create(@RequestBody Company company) {
+        companies.add(company);
+        
+        return company;
     }
 }
