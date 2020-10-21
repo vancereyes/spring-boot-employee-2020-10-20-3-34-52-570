@@ -20,6 +20,6 @@ public class CompanyService {
     }
 
     public Company create(Company company) {
-        return null;
+        return repository.save(company);
     }
 }
