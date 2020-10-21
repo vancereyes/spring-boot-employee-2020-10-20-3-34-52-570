@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -60,18 +59,16 @@ public class EmployeeController {
 
     @PutMapping("/{id}")
     public Employee update(@PathVariable int id, @RequestBody Employee updatedEmployee) {
-        Optional<Employee> employee = employees.stream()
+        return employees.stream()
                 .filter(e -> e.getId() == id)
-                .findFirst();
+                .findFirst()
+                .map(e -> {
+                    employees.remove(e);
+                    employees.add(updatedEmployee);
 
-        if (!employee.isPresent()) {
-            return null;
-        }
-
-        employees.remove(employee.get());
-        employees.add(updatedEmployee);
-
-        return updatedEmployee;
+                    return updatedEmployee;
+                })
+                .orElse(null);
     }
 
     @GetMapping(params = "gender")
