@@ -16,7 +16,7 @@ class EmployeeServiceTest {
     public static final String MALE = "Male";
 
     @Test
-    public void should_get_all_employees_when_get_all() {
+    public void should_return_all_employees_when_get_all() {
         //given
         EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
 
@@ -29,7 +29,7 @@ class EmployeeServiceTest {
     }
 
     @Test
-    public void should_add_employee_when_add_given_employee() {
+    public void should_return_employee_when_create_given_employee() {
         //given
         EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
         Employee employee = new Employee();
@@ -44,7 +44,7 @@ class EmployeeServiceTest {
     }
 
     @Test
-    public void should_return_get_employee_when_get_given_employee_id() {
+    public void should_return_employee_when_get_given_employee_id() {
         //given
         EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
         Employee employee = new Employee();
@@ -58,7 +58,7 @@ class EmployeeServiceTest {
     }
 
     @Test
-    public void should_return_all_employee_when_get_given_gender() {
+    public void should_return_all_male_employees_when_get_all_by_gender_given_male() {
         //given
         EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
         Mockito.when(repository.findAll())
@@ -75,7 +75,7 @@ class EmployeeServiceTest {
     }
 
     @Test
-    public void should_update_an_employee_info_when_put() {
+    public void should_return_an_update_employee_when_update_given_id_and_updated_employee() {
         //given
         int id = 1;
         Employee updatedEmployee = new Employee(id, "Micah", 23, "Female", 4000);
