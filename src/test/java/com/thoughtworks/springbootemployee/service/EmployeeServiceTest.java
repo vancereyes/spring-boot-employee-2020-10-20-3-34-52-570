@@ -25,4 +25,20 @@ class EmployeeServiceTest {
         Assertions.assertEquals(2, actual.size());
     }
 
+    @Test
+    public void should_add_employee_when_add_given_employee() {
+        //given
+        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
+        Employee employee = new Employee();
+        Mockito.when(repository.save(employee)).thenReturn(employee);
+        EmployeeService service = new EmployeeService(repository);
+
+        //when
+        Employee actual = service.create(employee);
+        //then
+        Assertions.assertEquals(employee, actual);
+
+    }
+
+
 }
