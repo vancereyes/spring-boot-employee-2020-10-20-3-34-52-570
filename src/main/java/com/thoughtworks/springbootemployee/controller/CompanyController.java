@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Company;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +35,15 @@ public class CompanyController {
     @PostMapping
     public Company create(@RequestBody Company company) {
         companies.add(company);
-        
+
         return company;
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id) {
+        companies.stream()
+                .filter(company -> company.getId() == id)
+                .findFirst()
+                .ifPresent(company -> companies.remove(company));
     }
 }
