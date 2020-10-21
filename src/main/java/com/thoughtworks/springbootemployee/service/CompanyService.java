@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.springframework.stereotype.Service;
 
@@ -56,5 +57,9 @@ public class CompanyService {
                 .skip(pageSize * (page - 1))
                 .limit(pageSize)
                 .collect(Collectors.toList());
+    }
+
+    public List<Employee> getEmployees(int id) {
+        return null;
     }
 }

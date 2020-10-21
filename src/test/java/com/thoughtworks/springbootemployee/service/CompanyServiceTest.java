@@ -3,7 +3,6 @@ package com.thoughtworks.springbootemployee.service;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
-import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -133,5 +132,24 @@ class CompanyServiceTest {
         assertEquals(pageSize, actual.size());
         assertEquals(companies.get(2), actual.get(0));
         assertEquals(companies.get(3), actual.get(1));
+    }
+
+    @Test
+    public void should_return_associated_employees_when_get_employees_given_company_id() {
+        //given
+        int id = 1;
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee(1, "Vance", 25, "Male", 60000));
+        employees.add(new Employee(2, "John", 23, "Male", 30000));
+        Company company = new Company(id, "OOCL", employees);
+
+        CompanyRepository repository = mock(CompanyRepository.class);
+        when(repository.find(id)).thenReturn(company);
+        CompanyService service = new CompanyService(repository);
+        //when
+        List<Employee> actual = service.getEmployees(id);
+        //then
+        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).find(id);
+        assertEquals(employees.size(), actual.size());
     }
 }
