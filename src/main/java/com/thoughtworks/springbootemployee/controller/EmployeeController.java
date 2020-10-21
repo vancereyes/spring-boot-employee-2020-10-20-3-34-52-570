@@ -31,4 +31,14 @@ public class EmployeeController {
         employees.add(employee);
         return employee;
     }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id) {
+        employees.stream()
+                .filter(employee -> employee.getId() == id)
+                .findFirst()
+                .ifPresent(employee -> employees.remove(employee));
+    }
+
+
 }
