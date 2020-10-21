@@ -44,11 +44,16 @@ public class CompanyController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        companies.stream()
+    public Company delete(@PathVariable int id) {
+        return companies.stream()
                 .filter(company -> company.getId() == id)
                 .findFirst()
-                .ifPresent(company -> companies.remove(company));
+                .map(company -> {
+                    company.getEmployees().clear();
+
+                    return company;
+                })
+                .orElse(null);
     }
 
     @GetMapping(params = {"page", "pageSize"})
