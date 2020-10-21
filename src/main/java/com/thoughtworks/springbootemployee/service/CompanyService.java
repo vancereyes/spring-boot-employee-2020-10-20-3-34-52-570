@@ -28,6 +28,13 @@ public class CompanyService {
     }
 
     public Company update(int id, Company updatedCompany) {
-        return null;
+        Company company = get(id);
+        if (company == null) {
+            return null;
+        }
+
+        repository.update(id, updatedCompany);
+
+        return updatedCompany;
     }
 }
