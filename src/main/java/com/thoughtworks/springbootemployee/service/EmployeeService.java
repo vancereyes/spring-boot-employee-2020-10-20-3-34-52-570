@@ -43,4 +43,8 @@ public class EmployeeService {
     public void delete(int id) {
         repository.delete(get(id));
     }
+
+    public List<Employee> paginate(int page, int pageSize) {
+        return null;
+    }
 }

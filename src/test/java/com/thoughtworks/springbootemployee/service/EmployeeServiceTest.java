@@ -107,5 +107,27 @@ class EmployeeServiceTest {
         Mockito.verify(repository, Mockito.times(1)).delete(employee);
     }
 
+    @Test
+    public void should_return_3_to_4_employee_out_of_5_when_paginate_given_page_2_and_page_size_2() {
+        //given
+        int pageSize = 2;
+        List<Employee> employees = asList(new Employee(),
+                new Employee(),
+                new Employee(),
+                new Employee(),
+                new Employee());
+        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
+        Mockito.when(repository.findAll()).thenReturn(employees);
+
+        EmployeeService service = new EmployeeService(repository);
+        //when
+        List<Employee> actual = service.paginate(2, pageSize);
+        //then
+        Mockito.verify(repository, Mockito.times(1)).findAll();
+        Assertions.assertEquals(pageSize, actual.size());
+        Assertions.assertEquals(employees.get(2), actual.get(0));
+        Assertions.assertEquals(employees.get(3), actual.get(1));
+    }
+
 
 }
