@@ -45,6 +45,9 @@ public class EmployeeService {
     }
 
     public List<Employee> paginate(int page, int pageSize) {
-        return null;
+        return getAll().stream()
+                .skip(pageSize * (page - 1))
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 }
