@@ -38,7 +38,15 @@ public class CompanyService {
         return updatedCompany;
     }
 
-    public Company delete(int id) {
-        return null;
+    public Company clearEmployees(int id) {
+        Company company = get(id);
+        if (company == null) {
+            return null;
+        }
+
+        company.getEmployees().clear();
+        repository.update(id, company);
+
+        return company;
     }
 }
