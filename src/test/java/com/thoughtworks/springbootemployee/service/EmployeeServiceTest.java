@@ -129,5 +129,23 @@ class EmployeeServiceTest {
         Assertions.assertEquals(employees.get(3), actual.get(1));
     }
 
+    @Test
+    public void should_return_null_when_update_given_id_does_not_exist() {
+        //given
+        int id = 1;
+        Employee updatedEmployee = new Employee();
+
+        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
+        Mockito.when(repository.update(id, updatedEmployee)).thenReturn(null);
+        EmployeeService service = new EmployeeService(repository);
+
+        //when
+        Employee actual = service.update(id, updatedEmployee);
+
+        //then
+        Mockito.verify(repository, Mockito.times(1)).update(id, updatedEmployee);
+        Assertions.assertNull(actual);
+    }
+
 
 }
