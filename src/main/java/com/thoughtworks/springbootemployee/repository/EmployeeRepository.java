@@ -19,4 +19,8 @@ public class EmployeeRepository {
     public Employee find(int id) {
         return null;
     }
+
+    public Employee update(int id, Employee employee) {
+        return null;
+    }
 }

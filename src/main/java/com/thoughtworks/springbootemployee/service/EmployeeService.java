@@ -35,4 +35,8 @@ public class EmployeeService {
                 .filter(employee -> employee.getGender().equalsIgnoreCase(gender))
                 .collect(Collectors.toList());
     }
+
+    public Employee update(int id, Employee updatedEmployee) {
+        return null;
+    }
 }

@@ -13,6 +13,8 @@ import static java.util.Arrays.asList;
 
 class EmployeeServiceTest {
 
+    public static final String MALE = "Male";
+
     @Test
     public void should_get_all_employees_when_get_all() {
         //given
@@ -61,15 +63,33 @@ class EmployeeServiceTest {
         EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
         Mockito.when(repository.findAll())
                 .thenReturn(asList(
-                        new Employee(1, "Vance", 25, "Male", 20000),
-                        new Employee(2, "John", 23, "Male", 45000),
+                        new Employee(1, "Vance", 25, MALE, 20000),
+                        new Employee(2, "John", 23, MALE, 45000),
                         new Employee(3, "Tori", 33, "Female", 40000)));
         EmployeeService service = new EmployeeService(repository);
         //when
-        List<Employee> actual = service.getAllByGender("Male");
+        List<Employee> actual = service.getAllByGender(MALE);
         //then
         Assert.assertEquals(2, actual.size());
 
+    }
+
+    @Test
+    public void should_update_an_employee_info_when_put() {
+        //given
+        int id = 1;
+        Employee updatedEmployee = new Employee(id, "Micah", 23, "Female", 4000);
+
+        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
+        Mockito.when(repository.update(id, updatedEmployee)).thenReturn(updatedEmployee);
+        EmployeeService service = new EmployeeService(repository);
+
+        //when
+        Employee actual = service.update(id, updatedEmployee);
+
+        //then
+        Mockito.verify(repository, Mockito.times(1)).update(id, updatedEmployee);
+        Assertions.assertSame(updatedEmployee, actual);
     }
 
 
