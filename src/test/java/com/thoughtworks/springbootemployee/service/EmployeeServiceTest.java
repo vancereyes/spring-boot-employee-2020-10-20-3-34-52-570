@@ -14,6 +14,7 @@ import static java.util.Arrays.asList;
 class EmployeeServiceTest {
 
     public static final String MALE = "Male";
+    public static final int WANTED_NUMBER_OF_INVOCATIONS = 1;
 
     @Test
     public void should_return_all_employees_when_get_all() {
@@ -25,7 +26,7 @@ class EmployeeServiceTest {
         //when
         List<Employee> actual = service.getAll();
         //then
-        Mockito.verify(repository, Mockito.times(1)).findAll();
+        Mockito.verify(repository, Mockito.times(WANTED_NUMBER_OF_INVOCATIONS)).findAll();
         Assertions.assertEquals(2, actual.size());
     }
 
@@ -40,7 +41,7 @@ class EmployeeServiceTest {
         //when
         Employee actual = service.create(employee);
         //then
-        Mockito.verify(repository, Mockito.times(1)).save(employee);
+        Mockito.verify(repository, Mockito.times(WANTED_NUMBER_OF_INVOCATIONS)).save(employee);
         Assertions.assertEquals(employee, actual);
 
     }
@@ -56,7 +57,7 @@ class EmployeeServiceTest {
         //when
         Employee actual = service.get(employee.getId());
         //then
-        Mockito.verify(repository, Mockito.times(1)).find(employee.getId());
+        Mockito.verify(repository, Mockito.times(WANTED_NUMBER_OF_INVOCATIONS)).find(employee.getId());
         Assertions.assertSame(employee, actual);
     }
 
@@ -73,7 +74,7 @@ class EmployeeServiceTest {
         //when
         List<Employee> actual = service.getAllByGender(MALE);
         //then
-        Mockito.verify(repository, Mockito.times(1)).findAll();
+        Mockito.verify(repository, Mockito.times(WANTED_NUMBER_OF_INVOCATIONS)).findAll();
         Assert.assertEquals(2, actual.size());
 
     }
@@ -92,7 +93,7 @@ class EmployeeServiceTest {
         Employee actual = service.update(id, updatedEmployee);
 
         //then
-        Mockito.verify(repository, Mockito.times(1)).update(id, updatedEmployee);
+        Mockito.verify(repository, Mockito.times(WANTED_NUMBER_OF_INVOCATIONS)).update(id, updatedEmployee);
         Assertions.assertSame(updatedEmployee, actual);
     }
 
@@ -107,8 +108,8 @@ class EmployeeServiceTest {
         //when
         service.delete(id);
         //then
-        Mockito.verify(repository, Mockito.times(1)).find(id);
-        Mockito.verify(repository, Mockito.times(1)).delete(employee);
+        Mockito.verify(repository, Mockito.times(WANTED_NUMBER_OF_INVOCATIONS)).find(id);
+        Mockito.verify(repository, Mockito.times(WANTED_NUMBER_OF_INVOCATIONS)).delete(employee);
     }
 
     @Test
@@ -127,7 +128,7 @@ class EmployeeServiceTest {
         //when
         List<Employee> actual = service.paginate(2, pageSize);
         //then
-        Mockito.verify(repository, Mockito.times(1)).findAll();
+        Mockito.verify(repository, Mockito.times(WANTED_NUMBER_OF_INVOCATIONS)).findAll();
         Assertions.assertEquals(pageSize, actual.size());
         Assertions.assertEquals(employees.get(2), actual.get(0));
         Assertions.assertEquals(employees.get(3), actual.get(1));
@@ -147,7 +148,7 @@ class EmployeeServiceTest {
         Employee actual = service.update(id, updatedEmployee);
 
         //then
-        Mockito.verify(repository, Mockito.times(1)).update(id, updatedEmployee);
+        Mockito.verify(repository, Mockito.times(WANTED_NUMBER_OF_INVOCATIONS)).update(id, updatedEmployee);
         Assertions.assertNull(actual);
     }
 
