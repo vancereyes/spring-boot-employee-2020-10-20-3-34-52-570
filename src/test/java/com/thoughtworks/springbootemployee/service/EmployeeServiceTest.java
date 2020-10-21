@@ -39,18 +39,19 @@ class EmployeeServiceTest {
         Assertions.assertEquals(employee, actual);
 
     }
-    
+
     @Test
     public void should_return_get_employee_when_get_given_employee_id() {
         //given
         EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
         Employee employee = new Employee();
+        employee.setId(1);
         Mockito.when(repository.find(employee.getId())).thenReturn(employee);
         EmployeeService service = new EmployeeService(repository);
         //when
         Employee actual = service.get(employee.getId());
         //then
-        Mockito.verify(repository, Mockito.times(1)).delete(employee);
+        Assertions.assertSame(employee, actual);
     }
 
 
