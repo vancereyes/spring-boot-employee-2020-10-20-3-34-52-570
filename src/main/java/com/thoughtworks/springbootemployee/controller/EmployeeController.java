@@ -52,7 +52,7 @@ public class EmployeeController {
     @GetMapping(params = {"page", "pageSize"})
     public List<Employee> paginate(@RequestParam int page, @RequestParam int pageSize) {
         return employees.stream()
-                .skip(page * pageSize)
+                .skip((page - 1) * pageSize)
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
