@@ -18,4 +18,8 @@ public class CompanyRepository {
     public Company find(int id) {
         return null;
     }
+
+    public Company update(int id, Company updatedCompany) {
+        return null;
+    }
 }

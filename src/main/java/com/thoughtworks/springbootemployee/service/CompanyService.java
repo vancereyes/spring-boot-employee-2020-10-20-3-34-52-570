@@ -26,4 +26,8 @@ public class CompanyService {
     public Company get(int id) {
         return repository.find(id);
     }
+
+    public Company update(int id, Company updatedCompany) {
+        return null;
+    }
 }

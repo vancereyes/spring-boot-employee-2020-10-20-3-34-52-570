@@ -12,6 +12,12 @@ public class Company {
         employees = new ArrayList<>();
     }
 
+    public Company(int id, String companyName, List<Employee> employees) {
+        this.id = id;
+        this.companyName = companyName;
+        this.employees = employees;
+    }
+
     public int getId() {
         return id;
     }

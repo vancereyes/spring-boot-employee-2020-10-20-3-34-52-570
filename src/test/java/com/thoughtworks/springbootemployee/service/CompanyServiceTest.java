@@ -1,8 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Company;
-import com.thoughtworks.springbootemployee.model.Company;
-import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.junit.jupiter.api.Test;
 
@@ -61,5 +60,27 @@ class CompanyServiceTest {
         //then
         verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).find(company.getId());
         assertSame(company, actual);
+    }
+
+    @Test
+    public void should_return_an_update_company_when_update_given_id_and_updated_company() {
+        //given
+        int id = 1;
+        Company company = new Company(id, "OOCL",
+                asList(new Employee(1, "Vance", 25, "Male", 60000)));
+        Company updatedCompany = new Company(id, "OOCL",
+                asList(new Employee(1, "John", 23, "Male", 30000)));
+        CompanyRepository repository = mock(CompanyRepository.class);
+
+        when(repository.find(id)).thenReturn(company);
+        when(repository.update(id, updatedCompany)).thenReturn(updatedCompany);
+
+        CompanyService service = new CompanyService(repository);
+        //when
+        Company actual = service.update(id, updatedCompany);
+        //then
+        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).find(id);
+        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).update(id, updatedCompany);
+        assertSame(updatedCompany, actual);
     }
 }
