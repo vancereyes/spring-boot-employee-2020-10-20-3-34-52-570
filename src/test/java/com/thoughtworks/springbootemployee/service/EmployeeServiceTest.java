@@ -2,14 +2,18 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
-import org.junit.Assert;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.List;
 
 import static java.util.Arrays.asList;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class EmployeeServiceTest {
 
@@ -19,53 +23,53 @@ class EmployeeServiceTest {
     @Test
     public void should_return_all_employees_when_get_all() {
         //given
-        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
+        EmployeeRepository repository = mock(EmployeeRepository.class);
 
-        Mockito.when(repository.findAll()).thenReturn(asList(new Employee(), new Employee()));
+        when(repository.findAll()).thenReturn(asList(new Employee(), new Employee()));
         EmployeeService service = new EmployeeService(repository);
         //when
         List<Employee> actual = service.getAll();
         //then
-        Mockito.verify(repository, Mockito.times(WANTED_NUMBER_OF_INVOCATIONS)).findAll();
-        Assertions.assertEquals(2, actual.size());
+        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).findAll();
+        assertEquals(2, actual.size());
     }
 
     @Test
     public void should_return_employee_when_create_given_employee() {
         //given
-        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
+        EmployeeRepository repository = mock(EmployeeRepository.class);
         Employee employee = new Employee();
-        Mockito.when(repository.save(employee)).thenReturn(employee);
+        when(repository.save(employee)).thenReturn(employee);
         EmployeeService service = new EmployeeService(repository);
 
         //when
         Employee actual = service.create(employee);
         //then
-        Mockito.verify(repository, Mockito.times(WANTED_NUMBER_OF_INVOCATIONS)).save(employee);
-        Assertions.assertEquals(employee, actual);
+        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).save(employee);
+        assertEquals(employee, actual);
 
     }
 
     @Test
     public void should_return_employee_when_get_given_employee_id() {
         //given
-        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
+        EmployeeRepository repository = mock(EmployeeRepository.class);
         Employee employee = new Employee();
         employee.setId(1);
-        Mockito.when(repository.find(employee.getId())).thenReturn(employee);
+        when(repository.find(employee.getId())).thenReturn(employee);
         EmployeeService service = new EmployeeService(repository);
         //when
         Employee actual = service.get(employee.getId());
         //then
-        Mockito.verify(repository, Mockito.times(WANTED_NUMBER_OF_INVOCATIONS)).find(employee.getId());
-        Assertions.assertSame(employee, actual);
+        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).find(employee.getId());
+        assertSame(employee, actual);
     }
 
     @Test
     public void should_return_all_male_employees_when_get_all_by_gender_given_male() {
         //given
-        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
-        Mockito.when(repository.findAll())
+        EmployeeRepository repository = mock(EmployeeRepository.class);
+        when(repository.findAll())
                 .thenReturn(asList(
                         new Employee(1, "Vance", 25, MALE, 20000),
                         new Employee(2, "John", 23, MALE, 45000),
@@ -74,8 +78,8 @@ class EmployeeServiceTest {
         //when
         List<Employee> actual = service.getAllByGender(MALE);
         //then
-        Mockito.verify(repository, Mockito.times(WANTED_NUMBER_OF_INVOCATIONS)).findAll();
-        Assert.assertEquals(2, actual.size());
+        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).findAll();
+        assertEquals(2, actual.size());
 
     }
 
@@ -85,16 +89,16 @@ class EmployeeServiceTest {
         int id = 1;
         Employee updatedEmployee = new Employee(id, "Micah", 23, "Female", 4000);
 
-        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
-        Mockito.when(repository.update(id, updatedEmployee)).thenReturn(updatedEmployee);
+        EmployeeRepository repository = mock(EmployeeRepository.class);
+        when(repository.update(id, updatedEmployee)).thenReturn(updatedEmployee);
         EmployeeService service = new EmployeeService(repository);
 
         //when
         Employee actual = service.update(id, updatedEmployee);
 
         //then
-        Mockito.verify(repository, Mockito.times(WANTED_NUMBER_OF_INVOCATIONS)).update(id, updatedEmployee);
-        Assertions.assertSame(updatedEmployee, actual);
+        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).update(id, updatedEmployee);
+        assertSame(updatedEmployee, actual);
     }
 
     @Test
@@ -102,14 +106,14 @@ class EmployeeServiceTest {
         //given
         int id = 1;
         Employee employee = new Employee();
-        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
-        Mockito.when(repository.find(id)).thenReturn(employee);
+        EmployeeRepository repository = mock(EmployeeRepository.class);
+        when(repository.find(id)).thenReturn(employee);
         EmployeeService service = new EmployeeService(repository);
         //when
         service.delete(id);
         //then
-        Mockito.verify(repository, Mockito.times(WANTED_NUMBER_OF_INVOCATIONS)).find(id);
-        Mockito.verify(repository, Mockito.times(WANTED_NUMBER_OF_INVOCATIONS)).delete(employee);
+        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).find(id);
+        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).delete(employee);
     }
 
     @Test
@@ -121,17 +125,17 @@ class EmployeeServiceTest {
                 new Employee(),
                 new Employee(),
                 new Employee());
-        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
-        Mockito.when(repository.findAll()).thenReturn(employees);
+        EmployeeRepository repository = mock(EmployeeRepository.class);
+        when(repository.findAll()).thenReturn(employees);
 
         EmployeeService service = new EmployeeService(repository);
         //when
         List<Employee> actual = service.paginate(2, pageSize);
         //then
-        Mockito.verify(repository, Mockito.times(WANTED_NUMBER_OF_INVOCATIONS)).findAll();
-        Assertions.assertEquals(pageSize, actual.size());
-        Assertions.assertEquals(employees.get(2), actual.get(0));
-        Assertions.assertEquals(employees.get(3), actual.get(1));
+        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).findAll();
+        assertEquals(pageSize, actual.size());
+        assertEquals(employees.get(2), actual.get(0));
+        assertEquals(employees.get(3), actual.get(1));
     }
 
     @Test
@@ -140,16 +144,16 @@ class EmployeeServiceTest {
         int id = 1;
         Employee updatedEmployee = new Employee();
 
-        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
-        Mockito.when(repository.update(id, updatedEmployee)).thenReturn(null);
+        EmployeeRepository repository = mock(EmployeeRepository.class);
+        when(repository.update(id, updatedEmployee)).thenReturn(null);
         EmployeeService service = new EmployeeService(repository);
 
         //when
         Employee actual = service.update(id, updatedEmployee);
 
         //then
-        Mockito.verify(repository, Mockito.times(WANTED_NUMBER_OF_INVOCATIONS)).update(id, updatedEmployee);
-        Assertions.assertNull(actual);
+        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).update(id, updatedEmployee);
+        assertNull(actual);
     }
 
 
