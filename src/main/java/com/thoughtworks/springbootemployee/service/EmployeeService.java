@@ -24,4 +24,8 @@ public class EmployeeService {
     public Employee create(Employee employee) {
         return repository.save(employee);
     }
+
+    public Employee get(int id) {
+        return null;
+    }
 }

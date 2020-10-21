@@ -12,4 +12,11 @@ public class EmployeeRepository {
     public Employee save(Employee employee) {
         return null;
     }
+
+    public void delete(Employee employee) {
+    }
+
+    public Employee find(int id) {
+        return null;
+    }
 }
