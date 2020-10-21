@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -69,6 +70,15 @@ public class CompanyController {
 
                     return updatedCompany;
                 })
+                .orElse(null);
+    }
+
+    @GetMapping("/{id}/employees")
+    public List<Employee> getCompanyEmployees(@PathVariable int id) {
+        return companies.stream()
+                .filter(company -> company.getId() == id)
+                .findFirst()
+                .map(Company::getEmployees)
                 .orElse(null);
     }
 }
