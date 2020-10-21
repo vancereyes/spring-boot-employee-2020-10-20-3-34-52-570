@@ -1,11 +1,11 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Company;
-import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,5 +56,19 @@ public class CompanyController {
                 .skip(pageSize * (page - 1))
                 .limit(pageSize)
                 .collect(Collectors.toList());
+    }
+
+    @PutMapping("/{id}")
+    public Company update(@PathVariable int id, @RequestBody Company updatedCompany) {
+        return companies.stream()
+                .filter(e -> e.getId() == id)
+                .findFirst()
+                .map(e -> {
+                    companies.remove(e);
+                    companies.add(updatedCompany);
+
+                    return updatedCompany;
+                })
+                .orElse(null);
     }
 }
