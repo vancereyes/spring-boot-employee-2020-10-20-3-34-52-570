@@ -24,6 +24,6 @@ public class CompanyService {
     }
 
     public Company get(int id) {
-        return null;
+        return repository.find(id);
     }
 }
