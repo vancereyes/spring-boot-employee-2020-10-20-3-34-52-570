@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -52,6 +53,23 @@ class EmployeeServiceTest {
         Employee actual = service.get(employee.getId());
         //then
         Assertions.assertSame(employee, actual);
+    }
+
+    @Test
+    public void should_return_all_employee_when_get_given_gender() {
+        //given
+        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
+        Mockito.when(repository.findAll())
+                .thenReturn(asList(
+                        new Employee(1, "Vance", 25, "Male", 20000),
+                        new Employee(2, "John", 23, "Male", 45000),
+                        new Employee(3, "Tori", 33, "Female", 40000)));
+        EmployeeService service = new EmployeeService(repository);
+        //when
+        List<Employee> actual = service.getAllByGender("Male");
+        //then
+        Assert.assertEquals(2, actual.size());
+
     }
 
 

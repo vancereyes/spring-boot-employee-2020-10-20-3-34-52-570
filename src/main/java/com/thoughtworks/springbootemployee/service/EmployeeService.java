@@ -28,4 +28,8 @@ public class EmployeeService {
     public Employee get(int id) {
         return repository.find(id);
     }
+
+    public List<Employee> getAllByGender(String gender) {
+        return null;
+    }
 }
