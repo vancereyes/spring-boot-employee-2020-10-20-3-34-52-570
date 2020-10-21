@@ -60,6 +60,6 @@ public class CompanyService {
     }
 
     public List<Employee> getEmployees(int id) {
-        return null;
+        return get(id).getEmployees();
     }
 }
