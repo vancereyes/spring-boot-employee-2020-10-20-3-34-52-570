@@ -29,4 +29,19 @@ class CompanyServiceTest {
         verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).findAll();
         assertEquals(2, actual.size());
     }
+
+    @Test
+    public void should_return_company_when_create_given_company() {
+        //given
+        CompanyRepository repository = mock(CompanyRepository.class);
+        Company company = new Company();
+        when(repository.save(company)).thenReturn(company);
+        CompanyService service = new CompanyService(repository);
+
+        //when
+        Company actual = service.create(company);
+        //then
+        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).save(company);
+        assertEquals(company, actual);
+    }
 }
