@@ -22,4 +22,8 @@ public class CompanyService {
     public Company create(Company company) {
         return repository.save(company);
     }
+
+    public Company get(int id) {
+        return null;
+    }
 }

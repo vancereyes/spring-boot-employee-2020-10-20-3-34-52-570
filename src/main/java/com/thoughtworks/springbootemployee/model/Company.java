@@ -27,4 +27,8 @@ public class Company {
     public List<Employee> getEmployees() {
         return employees;
     }
+
+    public void setId(int id) {
+
+    }
 }

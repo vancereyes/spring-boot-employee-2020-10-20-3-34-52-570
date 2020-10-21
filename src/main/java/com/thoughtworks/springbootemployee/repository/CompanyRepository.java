@@ -14,4 +14,8 @@ public class CompanyRepository {
     public Company save(Company company) {
         return null;
     }
+
+    public Company find(int id) {
+        return null;
+    }
 }
