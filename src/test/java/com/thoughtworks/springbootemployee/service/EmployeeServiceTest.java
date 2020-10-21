@@ -24,7 +24,6 @@ class EmployeeServiceTest {
     public void should_return_all_employees_when_get_all() {
         //given
         EmployeeRepository repository = mock(EmployeeRepository.class);
-
         when(repository.findAll()).thenReturn(asList(new Employee(), new Employee()));
         EmployeeService service = new EmployeeService(repository);
         //when
@@ -88,14 +87,11 @@ class EmployeeServiceTest {
         //given
         int id = 1;
         Employee updatedEmployee = new Employee(id, "Micah", 23, "Female", 4000);
-
         EmployeeRepository repository = mock(EmployeeRepository.class);
         when(repository.update(id, updatedEmployee)).thenReturn(updatedEmployee);
         EmployeeService service = new EmployeeService(repository);
-
         //when
         Employee actual = service.update(id, updatedEmployee);
-
         //then
         verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).update(id, updatedEmployee);
         assertSame(updatedEmployee, actual);
@@ -127,7 +123,6 @@ class EmployeeServiceTest {
                 new Employee());
         EmployeeRepository repository = mock(EmployeeRepository.class);
         when(repository.findAll()).thenReturn(employees);
-
         EmployeeService service = new EmployeeService(repository);
         //when
         List<Employee> actual = service.paginate(2, pageSize);
@@ -143,18 +138,13 @@ class EmployeeServiceTest {
         //given
         int id = 1;
         Employee updatedEmployee = new Employee();
-
         EmployeeRepository repository = mock(EmployeeRepository.class);
         when(repository.update(id, updatedEmployee)).thenReturn(null);
         EmployeeService service = new EmployeeService(repository);
-
         //when
         Employee actual = service.update(id, updatedEmployee);
-
         //then
         verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).update(id, updatedEmployee);
         assertNull(actual);
     }
-
-
 }
