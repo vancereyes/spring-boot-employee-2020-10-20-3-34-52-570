@@ -20,6 +20,9 @@ import static org.mockito.Mockito.when;
 class CompanyServiceTest {
 
     private static final int WANTED_NUMBER_OF_INVOCATIONS = 1;
+    private static final int COMPANY_ID = 1;
+    private static final String OOCL = "OOCL";
+    public static final String MALE = "Male";
 
     @Test
     public void should_return_all_companies_when_get_all() {
@@ -54,7 +57,7 @@ class CompanyServiceTest {
         //given
         CompanyRepository repository = mock(CompanyRepository.class);
         Company company = new Company();
-        company.setId(1);
+        company.setId(COMPANY_ID);
         when(repository.find(company.getId())).thenReturn(company);
         CompanyService service = new CompanyService(repository);
         //when
@@ -67,48 +70,45 @@ class CompanyServiceTest {
     @Test
     public void should_return_an_update_company_when_update_given_id_and_updated_company() {
         //given
-        int id = 1;
-        Company company = new Company(id, "OOCL",
-                asList(new Employee(1, "Vance", 25, "Male", 60000)));
-        Company updatedCompany = new Company(id, "OOCL",
-                asList(new Employee(1, "John", 23, "Male", 30000)));
+        Company company = new Company(COMPANY_ID, OOCL,
+                asList(new Employee(1, "Vance", 25, MALE, 60000)));
+        Company updatedCompany = new Company(COMPANY_ID, OOCL,
+                asList(new Employee(1, "John", 23, MALE, 30000)));
         CompanyRepository repository = mock(CompanyRepository.class);
 
-        when(repository.find(id)).thenReturn(company);
-        when(repository.update(id, updatedCompany)).thenReturn(updatedCompany);
+        when(repository.find(COMPANY_ID)).thenReturn(company);
+        when(repository.update(COMPANY_ID, updatedCompany)).thenReturn(updatedCompany);
 
         CompanyService service = new CompanyService(repository);
         //when
-        Company actual = service.update(id, updatedCompany);
+        Company actual = service.update(COMPANY_ID, updatedCompany);
         //then
-        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).find(id);
-        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).update(id, updatedCompany);
+        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).find(COMPANY_ID);
+        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).update(COMPANY_ID, updatedCompany);
         assertSame(updatedCompany, actual);
     }
 
     @Test
     public void should_delete_all_company_employees_when_clear_employees_given_company_id() {
         //given
-        String companyName = "OOCL";
-        int id = 1;
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1, "Vance", 25, "Male", 60000));
-        employees.add(new Employee(2, "John", 23, "Male", 30000));
-        Company company = new Company(id, companyName, employees);
+        employees.add(new Employee(1, "Vance", 25, MALE, 60000));
+        employees.add(new Employee(2, "John", 23, MALE, 30000));
+        Company company = new Company(COMPANY_ID, OOCL, employees);
         CompanyRepository repository = mock(CompanyRepository.class);
-        when(repository.find(id)).thenReturn(company);
+        when(repository.find(COMPANY_ID)).thenReturn(company);
         CompanyService service = new CompanyService(repository);
 
         company.getEmployees().clear();
         Company updatedCompany = company;
         //when
-        Company actual = service.clearEmployees(id);
+        Company actual = service.clearEmployees(COMPANY_ID);
         //then
-        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).find(id);
-        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).update(id, updatedCompany);
+        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).find(COMPANY_ID);
+        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).update(COMPANY_ID, updatedCompany);
         assertTrue(actual.getEmployees().isEmpty());
-        assertEquals(companyName, actual.getCompanyName());
-        assertEquals(id, actual.getId());
+        assertEquals(OOCL, actual.getCompanyName());
+        assertEquals(COMPANY_ID, actual.getId());
     }
 
     @Test
@@ -137,19 +137,18 @@ class CompanyServiceTest {
     @Test
     public void should_return_associated_employees_when_get_employees_given_company_id() {
         //given
-        int id = 1;
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1, "Vance", 25, "Male", 60000));
-        employees.add(new Employee(2, "John", 23, "Male", 30000));
-        Company company = new Company(id, "OOCL", employees);
+        employees.add(new Employee(1, "Vance", 25, MALE, 60000));
+        employees.add(new Employee(2, "John", 23, MALE, 30000));
+        Company company = new Company(COMPANY_ID, OOCL, employees);
 
         CompanyRepository repository = mock(CompanyRepository.class);
-        when(repository.find(id)).thenReturn(company);
+        when(repository.find(COMPANY_ID)).thenReturn(company);
         CompanyService service = new CompanyService(repository);
         //when
-        List<Employee> actual = service.getEmployees(id);
+        List<Employee> actual = service.getEmployees(COMPANY_ID);
         //then
-        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).find(id);
+        verify(repository, times(WANTED_NUMBER_OF_INVOCATIONS)).find(COMPANY_ID);
         assertEquals(employees.size(), actual.size());
     }
 }
