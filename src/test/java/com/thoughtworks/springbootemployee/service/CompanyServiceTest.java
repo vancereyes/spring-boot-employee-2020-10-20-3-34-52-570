@@ -22,7 +22,9 @@ class CompanyServiceTest {
     private static final int WANTED_NUMBER_OF_INVOCATIONS = 1;
     private static final int COMPANY_ID = 1;
     private static final String OOCL = "OOCL";
-    public static final String MALE = "Male";
+    private static final String MALE = "Male";
+    private static final String VANCE = "Vance";
+    private static final String JOHN = "John";
 
     @Test
     public void should_return_all_companies_when_get_all() {
@@ -71,9 +73,9 @@ class CompanyServiceTest {
     public void should_return_an_update_company_when_update_given_id_and_updated_company() {
         //given
         Company company = new Company(COMPANY_ID, OOCL,
-                asList(new Employee(1, "Vance", 25, MALE, 60000)));
+                asList(new Employee(1, VANCE, 25, MALE, 60000)));
         Company updatedCompany = new Company(COMPANY_ID, OOCL,
-                asList(new Employee(1, "John", 23, MALE, 30000)));
+                asList(new Employee(1, JOHN, 23, MALE, 30000)));
         CompanyRepository repository = mock(CompanyRepository.class);
 
         when(repository.find(COMPANY_ID)).thenReturn(company);
@@ -92,8 +94,8 @@ class CompanyServiceTest {
     public void should_delete_all_company_employees_when_clear_employees_given_company_id() {
         //given
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1, "Vance", 25, MALE, 60000));
-        employees.add(new Employee(2, "John", 23, MALE, 30000));
+        employees.add(new Employee(1, VANCE, 25, MALE, 60000));
+        employees.add(new Employee(2, JOHN, 23, MALE, 30000));
         Company company = new Company(COMPANY_ID, OOCL, employees);
         CompanyRepository repository = mock(CompanyRepository.class);
         when(repository.find(COMPANY_ID)).thenReturn(company);
@@ -138,8 +140,8 @@ class CompanyServiceTest {
     public void should_return_associated_employees_when_get_employees_given_company_id() {
         //given
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1, "Vance", 25, MALE, 60000));
-        employees.add(new Employee(2, "John", 23, MALE, 30000));
+        employees.add(new Employee(1, VANCE, 25, MALE, 60000));
+        employees.add(new Employee(2, JOHN, 23, MALE, 30000));
         Company company = new Company(COMPANY_ID, OOCL, employees);
 
         CompanyRepository repository = mock(CompanyRepository.class);
